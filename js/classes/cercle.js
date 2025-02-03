@@ -29,6 +29,8 @@ class Circle {
   }
 
   /**
+   iiiii
+  /**
    * Returns the pre-computed circumference of the Circle.
    * @returns {number} The circumference of the circle.
    * @since 1.1.0
