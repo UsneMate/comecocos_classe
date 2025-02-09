@@ -1,11 +1,19 @@
 import { Comecocos } from "./classes/Comecocos.js"; // Importar la classe Comecocos
+import { Tauler } from "./classes/Tauler.js"; // Importar la classe Tauler
 
-// Coordenades de la mida del canvas
 const xCanvas = 600;
 const yCanvas = 500;
 
-// Creem una instància del comecocos
 let comecocos;
+let imgMur;
+let tauler; // Instància del tauler
+
+/**
+ * Càrrega de la imatge de les parets
+ */
+function preload() {
+  imgMur = loadImage("../img/roca.png"); // Carregar la imatge de la paret
+}
 
 /**
  * Configuració inicial
@@ -13,7 +21,11 @@ let comecocos;
 function setup() {
   createCanvas(xCanvas, yCanvas);
   angleMode(DEGREES);
+
   comecocos = new Comecocos(100, 240, 40, "Yellow"); // Creem el comecocos
+
+  // Creem una instància del tauler
+  tauler = new Tauler(30, 25, imgMur); // 30 files x 25 columnes
 }
 
 /**
@@ -21,16 +33,16 @@ function setup() {
  */
 function draw() {
   background(220);
-  drawParedsVerticals();
-  drawParedsHoritzontals();
-  comecocos.draw(); // Dibuixem el comecocos
 
-  // Comprovem si el comecocos surt dels límits i corregim la seva posició
+  // Dibuixar el tauler
+  tauler.draw(); // Dibuixar les parets del tauler
+
+  comecocos.draw(); // Dibuixar el comecocos
   comecocos.preventOutOfBounds();
 }
 
 /**
- * Funció per moure el comecocos amunt
+ * Funció per moure el comecocos
  */
 function keyPressed() {
   if (keyCode === UP_ARROW) {
@@ -44,28 +56,7 @@ function keyPressed() {
   }
 }
 
-// funció per dibuixar les pareds verticals
-/**
- *
- */
-function drawParedsVerticals() {
-  fill(0);
-  rect(0, 0, 20, 210);
-  rect(0, 270, 20, 250);
-  rect(579, 0, 20, 210);
-  rect(579, 270, 20, 250);
-}
-
-// funció per dibuixar les pareds horitzontals
-/**
- *
- */
-function drawParedsHoritzontals() {
-  fill(0);
-  rect(20, 0, 559, 20);
-  rect(20, 480, 559, 20);
-}
-
 globalThis.setup = setup;
 globalThis.draw = draw;
 globalThis.keyPressed = keyPressed;
+globalThis.preload = preload;
