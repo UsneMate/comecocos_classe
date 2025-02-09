@@ -7,7 +7,7 @@ const yCanvas = 500;
 // coordenades comecocos
 let xCoordComecocos = 100;
 let yCoordComecocos = 240;
-const radiComecocos = 80;
+const radiComecocos = 40;
 let angleIniciComecocos = 40;
 let angleFiComecocos = 330;
 const colorComecocos = "Yellow";
@@ -39,10 +39,10 @@ function draw() {
  */
 function drawParedsVerticals() {
   fill(0);
-  rect(0, 0, 20, 180);
-  rect(0, 300, 20, 220);
-  rect(579, 0, 20, 180);
-  rect(579, 300, 20, 220);
+  rect(0, 0, 20, 210);
+  rect(0, 270, 20, 250);
+  rect(579, 0, 20, 210);
+  rect(579, 270, 20, 250);
 }
 
 // funció per dibuixar les pareds horitzontals
@@ -69,7 +69,6 @@ function drawComecocos() {
  *
  */
 function keyPressed() {
-  console.log("nnnn");
   if (keyCode === UP_ARROW) {
     yCoordComecocos -= velocitat;
     angleIniciComecocos = 300;
@@ -83,7 +82,6 @@ function keyPressed() {
     angleIniciComecocos = 210;
     angleFiComecocos = 135;
   } else if (keyCode === RIGHT_ARROW) {
-    console.log("nnnn");
     xCoordComecocos += velocitat;
     angleIniciComecocos = 40;
     angleFiComecocos = 330;
@@ -104,7 +102,7 @@ function keyPressed() {
   // Bloquejar el moviment lateral excloent les obertures laterals
   // L'alçada del pas és de 100
   // primer limitem la sortida de l'esquerra
-  if (xCoordComecocos < 20 + radiComecocos / 2 && (yCoordComecocos <= 200 || yCoordComecocos >= 300)) {
+  if (xCoordComecocos < 20 + radiComecocos / 2 && (yCoordComecocos <= 210 || yCoordComecocos >= 300)) {
     xCoordComecocos = 20 + radiComecocos / 2;
   }
   // Ara limitem la sortida de la dreta
@@ -123,8 +121,7 @@ function keyPressed() {
     xCoordComecocos = xCanvas;
   }
 }
-
 globalThis.setup = setup;
 globalThis.draw = draw;
-globalThis.keyPressed = keyPressed;
 // globalThis.preload = preload;
+globalThis.keyPressed = keyPressed;
