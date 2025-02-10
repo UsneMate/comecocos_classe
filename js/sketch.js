@@ -1,12 +1,28 @@
 import { Comecocos } from "./classes/Comecocos.js"; // Importar la classe Comecocos
-import { Tauler } from "./classes/Tauler.js"; // Importar la classe Tauler
 
 const xCanvas = 600;
-const yCanvas = 500;
+const yCanvas = 600;
+
+const gameBoard = [
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+];
 
 let comecocos;
 let imgMur;
-let tauler; // Instància del tauler
 
 /**
  * Càrrega de la imatge de les parets
@@ -23,9 +39,6 @@ function setup() {
   angleMode(DEGREES);
 
   comecocos = new Comecocos(100, 240, 40, "Yellow"); // Creem el comecocos
-
-  // Creem una instància del tauler
-  tauler = new Tauler(30, 25, imgMur); // 30 files x 25 columnes
 }
 
 /**
@@ -34,11 +47,22 @@ function setup() {
 function draw() {
   background(220);
 
-  // Dibuixar el tauler
-  tauler.draw(); // Dibuixar les parets del tauler
+  const midaCasella = 40;
 
-  comecocos.draw(); // Dibuixar el comecocos
-  comecocos.preventOutOfBounds();
+  for (let row = 0; row < gameBoard.length; row++) {
+    for (let col = 0; col < gameBoard[row].length; col++) {
+      const x = col * midaCasella; // Posició X de la cel·la
+      const y = row * midaCasella; // Posició Y de la cel·la
+
+      // Dibuixar segons el valor de gameBoard[row][col]
+      if (gameBoard[row][col] === 1) {
+        image(imgMur, x, y, midaCasella, midaCasella); // Dibuixar roca
+      }
+    }
+  }
+
+  comecocos.draw(); // Dibuixar el comecocos un cop fora del bucle
+  comecocos.preventOutOfBounds(); // Comprovar si el comecocos surt del canvas
 }
 
 /**

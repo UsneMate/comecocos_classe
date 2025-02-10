@@ -55,18 +55,18 @@ export class Comecocos {
     }
 
     // Assegurem que no surti per l'esquerra ni per la dreta
-    if (this.xCoord < 20 + this.radi / 2 && (this.yCoord <= 210 || this.yCoord >= 270)) {
+    if (this.xCoord < 20 + this.radi / 2 && (this.yCoord <= 270 || this.yCoord >= 330)) {
       this.xCoord = 20 + this.radi / 2;
     }
-    if (this.xCoord > 600 - 20 - this.radi / 2 && (this.yCoord <= 200 || this.yCoord >= 270)) {
+    if (this.xCoord > 600 - 20 - this.radi / 2 && (this.yCoord <= 270 || this.yCoord >= 330)) {
       this.xCoord = 600 - 20 - this.radi / 2;
     }
 
     // Si el comecocos surt del canvas, ha de reapareixer a l'altre costat
-    if (this.xCoord > 600 && (this.yCoord > 200 && this.yCoord < 270)) {
+    if (this.xCoord > 600 && (this.yCoord > 270 && this.yCoord < 330)) {
       this.xCoord = 0;
     }
-    if (this.xCoord < 0 && (this.yCoord > 200 && this.yCoord < 270)) {
+    if (this.xCoord < 0 && (this.yCoord > 270 && this.yCoord < 330)) {
       this.xCoord = 600;
     }
   }
