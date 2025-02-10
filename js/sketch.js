@@ -1,34 +1,38 @@
 import { Comecocos } from "./classes/Comecocos.js"; // Importar la classe Comecocos
+import { Food } from "./classes/Food.js"; // Importar la classe Food
 
 const xCanvas = 600;
 const yCanvas = 600;
 
 const gameBoard = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-  [1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+  [1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 1],
+  [1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 1],
+  [1, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 1],
+  [1, 2, 0, 1, 0, 0, 0, 0, 0, 2, 0, 1, 2, 2, 1],
+  [1, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 2, 2, 1],
+  [0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 2, 0, 2, 2, 0],
+  [0, 0, 2, 0, 0, 0, 1, 1, 1, 2, 2, 0, 2, 2, 0],
+  [1, 0, 2, 1, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1],
+  [1, 0, 2, 1, 0, 0, 0, 0, 0, 2, 2, 1, 2, 2, 1],
+  [1, 0, 2, 1, 0, 0, 0, 0, 0, 2, 2, 1, 2, 2, 1],
+  [1, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 1],
+  [1, 2, 0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 1],
+  [1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
 let comecocos;
 let imgMur;
+let imgFood;
+const foodItems = []; // Array per emmagatzemar els objectes de menjar
 
 /**
  * Càrrega de la imatge de les parets
  */
 function preload() {
   imgMur = loadImage("../img/roca.png"); // Carregar la imatge de la paret
+  imgFood = loadImage("../img/food.png"); // Carregar la imatge del menjar
 }
 
 /**
@@ -39,6 +43,15 @@ function setup() {
   angleMode(DEGREES);
 
   comecocos = new Comecocos(100, 240, 40, "Yellow"); // Creem el comecocos
+
+  // Crear els objectes de menjar per a les cel·les amb valor 0
+  for (let row = 0; row < gameBoard.length; row++) {
+    for (let col = 0; col < gameBoard[row].length; col++) {
+      if (gameBoard[row][col] === 2) {
+        foodItems.push(new Food(col, row, 10)); // Afegir un objecte de menjar amb 10 punts
+      }
+    }
+  }
 }
 
 /**
@@ -61,22 +74,42 @@ function draw() {
     }
   }
 
+  // Dibuixar els objectes de menjar
+  for (const food of foodItems) {
+    food.draw(imgFood);
+  }
+
   comecocos.draw(); // Dibuixar el comecocos un cop fora del bucle
   comecocos.preventOutOfBounds(); // Comprovar si el comecocos surt del canvas
 }
 
 /**
- * Funció per moure el comecocos
+ *
  */
 function keyPressed() {
+  const midaCasella = 40;
+
+  // Moure el comecocos segons la tecla premuda
   if (keyCode === UP_ARROW) {
     comecocos.moveUp();
+    if (isWall(comecocos.xCoord, comecocos.yCoord)) {
+      comecocos.yCoord += 30; // Desfer el moviment si hi ha una roca
+    }
   } else if (keyCode === DOWN_ARROW) {
     comecocos.moveDown();
+    if (isWall(comecocos.xCoord, comecocos.yCoord)) {
+      comecocos.yCoord -= 30; // Desfer el moviment si hi ha una roca
+    }
   } else if (keyCode === LEFT_ARROW) {
     comecocos.moveLeft();
+    if (isWall(comecocos.xCoord, comecocos.yCoord)) {
+      comecocos.xCoord += 30; // Desfer el moviment si hi ha una roca
+    }
   } else if (keyCode === RIGHT_ARROW) {
     comecocos.moveRight();
+    if (isWall(comecocos.xCoord, comecocos.yCoord)) {
+      comecocos.xCoord -= 30; // Desfer el moviment si hi ha una roca
+    }
   }
 }
 
