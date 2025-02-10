@@ -9,9 +9,10 @@ const gameBoard = [
   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
   [1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
   [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
   [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-  [1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1],
+  [0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+  [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
   [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
   [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1],
   [1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1],
@@ -77,6 +78,21 @@ function keyPressed() {
   } else if (keyCode === RIGHT_ARROW) {
     comecocos.moveRight();
   }
+}
+
+/**
+ * funció per verificar si tenim una pared
+ * @param x
+ * @param y
+ * @returns {boolean}
+ */
+function isWall(x, y) {
+  // Calculem la posició de la casella dins de gameBoard
+  const col = Math.floor(x / 40); // Calcular la columna
+  const row = Math.floor(y / 40); // Calcular la fila
+
+  // Comprovem si la casella és una roca (valor 1)
+  return gameBoard[row][col] === 1;
 }
 
 globalThis.setup = setup;
