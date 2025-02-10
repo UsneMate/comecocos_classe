@@ -50,8 +50,8 @@ export class Comecocos {
     if (this.yCoord < 20 + this.radi / 2) {
       this.yCoord = 20 + this.radi / 2;
     }
-    if (this.yCoord > 500 - 20 - this.radi / 2) {
-      this.yCoord = 500 - 20 - this.radi / 2;
+    if (this.yCoord > 600 - 20 - this.radi / 2) {
+      this.yCoord = 600 - 20 - this.radi / 2;
     }
 
     // Assegurem que no surti per l'esquerra ni per la dreta
