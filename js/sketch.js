@@ -1,5 +1,5 @@
 import { Comecocos } from "./classes/Comecocos.js"; // Importar la classe Comecocos
-import { Food } from "./classes/Food.js"; // Importar la classe Food
+import { Food } from "./classes/food.js"; // Importar la classe Food
 
 const xCanvas = 600;
 const yCanvas = 600;
@@ -13,7 +13,7 @@ const gameBoard = [
   [1, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 2, 2, 1],
   [0, 0, 2, 0, 0, 0, 0, 1, 0, 2, 2, 0, 2, 2, 0],
   [0, 0, 2, 0, 0, 0, 1, 1, 1, 2, 2, 0, 2, 2, 0],
-  [1, 0, 2, 1, 0, 0, 1, 1, 1, 2, 2, 1, 2, 2, 1],
+  [1, 0, 2, 0, 0, 0, 1, 1, 1, 2, 2, 0, 2, 2, 1],
   [1, 0, 2, 1, 0, 0, 0, 0, 0, 2, 2, 1, 2, 2, 1],
   [1, 0, 2, 1, 0, 0, 0, 0, 0, 2, 2, 1, 2, 2, 1],
   [1, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 1],
@@ -26,6 +26,7 @@ let comecocos;
 let imgMur;
 let imgFood;
 const foodItems = []; // Array per emmagatzemar els objectes de menjar
+let score = 0; // Punts inicials
 
 /**
  * Càrrega de la imatge de les parets
@@ -75,8 +76,20 @@ function draw() {
   }
 
   // Dibuixar els objectes de menjar
-  for (const food of foodItems) {
+  for (let i = foodItems.length - 1; i >= 0; i--) {
+    const food = foodItems[i];
     food.draw(imgFood);
+
+    // Comprovar si el comecocos ha recollit el menjar
+    if (comecocos.xCoord < food.x * 40 + 30 &&
+      comecocos.xCoord + 40 > food.x * 40 &&
+      comecocos.yCoord < food.y * 40 + 30 &&
+      comecocos.yCoord + 40 > food.y * 40) {
+      // Eliminar el menjar de la llista
+      foodItems.splice(i, 1);
+      // Afegir punts
+      score += food.points;
+    }
   }
 
   comecocos.draw(); // Dibuixar el comecocos un cop fora del bucle
@@ -126,6 +139,21 @@ function isWall(x, y) {
 
   // Comprovem si la casella és una roca (valor 1)
   return gameBoard[row][col] === 1;
+}
+
+/**
+ * Funció per verificar si hi ha menjar en una posició donada
+ * @param x Coordenada X en píxels
+ * @param y Coordenada Y en píxels
+ * @returns {boolean} Retorna cert si hi ha menjar en la posició
+ */
+function isFood(x, y) {
+  // Calculem la posició de la casella dins de gameBoard
+  const col = Math.floor(x / 40); // Calcular la columna
+  const row = Math.floor(y / 40); // Calcular la fila
+
+  // Comprovem si la casella conté menjar (valor 2)
+  return gameBoard[row][col] === 2;
 }
 
 globalThis.setup = setup;
