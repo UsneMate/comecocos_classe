@@ -1,8 +1,8 @@
 import { gameObject } from "./classes/gameObject.js";
 import { Pacman } from "./classes/pacman.js";
 import { Food } from "./classes/food.js";
-import {configGame} from "./constants.js";
-import {ErrorPac} from "./classes/errorPac.js";
+import {configGame} from "./vendor/constants";
+import {ErrorPac} from "./classes/errorPac";
 //0 -> pallcman, 1 -> roca, 2 -> food
 /*
 const map = [
@@ -48,14 +48,14 @@ let startTimeGame = 0;
 let endTimeGame = 0;
 
 function preload() {
-  imgRock = loadImage("../media/roca.png", handleImage, handleError);
-  imgFood = loadImage("../media/food.png", handleImage, handleError);
-  imgPacman = loadImage("../media/pacLeft.png", handleImage, handleError);
-  imgPacmanRight = loadImage("../media/pacRight.png", handleImage, handleError);
-  imgPacmanUp = loadImage("../media/pacUp.png", handleImage, handleError);
-  imgPacmanLeft = loadImage("../media/pacLeft.png", handleImage, handleError);
-  imgPacmanDown = loadImage("../media/pacDown.png", handleImage, handleError);
-  wakaSound = loadSound("../media/audio/WakaWaka.mp3");
+  imgRock = loadImage("../img/roca.png", handleImage, handleError);
+  imgFood = loadImage("../img/food.png", handleImage, handleError);
+  imgPacman = loadImage("../img/pacLeft.png", handleImage, handleError);
+  imgPacmanRight = loadImage("../img/pacRight.png", handleImage, handleError);
+  imgPacmanUp = loadImage("../img/pacUp.png", handleImage, handleError);
+  imgPacmanLeft = loadImage("../img/pacLeft.png", handleImage, handleError);
+  imgPacmanDown = loadImage("../img/pacDown.png", handleImage, handleError);
+  //wakaSound = loadSound("../media/audio/WakaWaka.mp3");
 }
 
 function handleError() {

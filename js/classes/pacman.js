@@ -3,7 +3,7 @@ import {gameObject} from './gameObject.js';
 import {IMAGE_SIZE} from '../sketch2.js';
 import {WIDTH_CANVAS} from '../sketch2.js';
 */
-import {configGame} from "../constants.js";
+import {configGame} from "../vendor/constants";
 
 const { IMAGE_SIZE, WIDTH_CANVAS, SPEED_PACMAN } = configGame;
 
