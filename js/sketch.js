@@ -3,6 +3,7 @@ import { Pacman } from "./classes/pacman.js";
 import { Food } from "./classes/food.js";
 import {configGame} from "./vendor/constants";
 import {ErrorPac} from "./classes/errorPac";
+export const IMAGE_SIZE = 40; // O el valor que sigui
 //0 -> pallcman, 1 -> roca, 2 -> food
 /*
 const map = [

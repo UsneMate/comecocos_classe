@@ -1,6 +1,7 @@
 
 //import { IMAGE_SIZE } from "../sketch.js";
 import { IMAGE_SIZE } from "../sketch.js";
+
 /** @class gameObject representa una classe. */
 
 export class gameObject {
